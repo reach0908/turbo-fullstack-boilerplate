@@ -1,4 +1,6 @@
-node_modules
-.turbo
-.next
-.env
+.next/
+.store/
+.turbo/
+data/
+dist/
+node_modules/
