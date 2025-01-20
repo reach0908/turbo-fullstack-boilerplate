@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Script from 'next/script';
 
 import '@repo/ui/styles/globals.css';
 
@@ -16,11 +15,11 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<head>
-				<Script
+				<script
 					src="https://unpkg.com/react-scan/dist/auto.global.js"
-					strategy="beforeInteractive"
+					async={false}
+					defer={false}
 				/>
-				{/* rest of your scripts go under */}
 			</head>
 			<body>{children}</body>
 		</html>
