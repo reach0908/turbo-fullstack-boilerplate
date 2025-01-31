@@ -3,10 +3,12 @@ import tailwindcssAnimate from "tailwindcss-animate";
 import { fontFamily } from "tailwindcss/defaultTheme";
 
 const config = {
-  darkMode: ["class"],
+  darkMode: ["selector"],
   content: [
-    "app/**/*.{ts,tsx}",
-    "components/**/*.{ts,tsx}",
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
     "../../packages/ui/src/components/**/*.{ts,tsx}",
   ],
   theme: {
