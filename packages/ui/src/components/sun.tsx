@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import type { Variants } from 'motion/react';
-import { motion, useAnimation } from 'motion/react';
+import type { Variants } from "motion/react";
+import { motion, useAnimation } from "motion/react";
 
 const pathVariants: Variants = {
   normal: { opacity: 1 },
@@ -17,8 +17,8 @@ const SunIcon = () => {
   return (
     <div
       className="cursor-pointer select-none p-2 hover:bg-accent rounded-md transition-colors duration-200 flex items-center justify-center"
-      onMouseEnter={() => controls.start('animate')}
-      onMouseLeave={() => controls.start('normal')}
+      onMouseEnter={() => controls.start("animate")}
+      onMouseLeave={() => controls.start("normal")}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -33,14 +33,14 @@ const SunIcon = () => {
       >
         <circle cx="12" cy="12" r="4" />
         {[
-          'M12 2v2',
-          'm19.07 4.93-1.41 1.41',
-          'M20 12h2',
-          'm17.66 17.66 1.41 1.41',
-          'M12 20v2',
-          'm6.34 17.66-1.41 1.41',
-          'M2 12h2',
-          'm4.93 4.93 1.41 1.41',
+          "M12 2v2",
+          "m19.07 4.93-1.41 1.41",
+          "M20 12h2",
+          "m17.66 17.66 1.41 1.41",
+          "M12 20v2",
+          "m6.34 17.66-1.41 1.41",
+          "M2 12h2",
+          "m4.93 4.93 1.41 1.41",
         ].map((d, index) => (
           <motion.path
             key={d}

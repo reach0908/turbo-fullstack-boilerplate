@@ -17,7 +17,7 @@ const svgTransition: Transition = {
   ease: "easeInOut",
 };
 
-const MoonIcon = ({ className }: { className?: string }) => {
+const MoonIcon = () => {
   const controls = useAnimation();
 
   return (
