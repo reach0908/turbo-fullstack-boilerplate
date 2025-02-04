@@ -1,47 +1,43 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# Dependencies
-node_modules
-.pnp
+# .gitignore: Turborepo, NestJS, Next.js
+
+# 운영체제 관련 파일
+.DS_Store
+
+# 의존성 디렉토리
+node_modules/
+.pnp/
 .pnp.js
 
-# Local env files
+# 환경 변수 파일
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
-# Testing
-coverage
+# NestJS 빌드 출력
+dist/
 
-# Turbo
-.turbo
-
-# Vercel
-.vercel
-
-# Build Outputs
+# Next.js 빌드 출력
 .next/
 out/
-build
-dist
+build/
 
+# Turborepo 캐시 및 빌드 출력
+.turbo/
+.cache/
 
-# Debug
-npm-debug.log*
+# Vercel 배포 관련
+.vercel/
 
-# Misc
-.DS_Store
-*.pem
+# 테스트 결과
+coverage/
+.nyc_output/
 
-# compiled output
-/dist
-/node_modules
-/build
-
-# Logs
-logs
+# 로그 파일 및 디버그 파일
+logs/
 *.log
 npm-debug.log*
 pnpm-debug.log*
@@ -49,45 +45,17 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
-# OS
-.DS_Store
-
-# Tests
-/coverage
-/.nyc_output
-
-# IDEs and editors
-/.idea
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
-
-# IDE - VSCode
+# IDE 및 에디터 설정
+.idea/
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
 
-# dotenv environment variable files
-.env
-.env.development.local
-.env.test.local
-.env.production.local
-.env.local
+# 임시 파일 및 디렉토리
+.temp/
+.tmp/
 
-# temp directory
-.temp
-.tmp
-
-# Runtime data
-pids
-*.pid
-*.seed
-*.pid.lock
-
-# Diagnostic reports (https://nodejs.org/api/report.html)
-report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+# Node.js 진단 보고서
+report.*.*.*.*.json
