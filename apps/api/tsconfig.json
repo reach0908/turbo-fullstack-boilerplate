@@ -1,0 +1,9 @@
+{
+	"extends": "@workspace/typescript-config/nestjs.json",
+	"compilerOptions": {
+		"baseUrl": "./",
+		"outDir": "./dist",
+		"allowJs": true
+	},
+	"include": ["**/*.ts", "**/*.js", "eslint.config.mjs"]
+}
