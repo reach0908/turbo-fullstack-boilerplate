@@ -9,7 +9,7 @@ import {
 	Redirect,
 	Param,
 } from '@nestjs/common';
-import { Request } from 'express';
+import type { Request } from 'express';
 // 컨트롤러 접두사
 @Controller('users')
 export class UserController {
