@@ -24,9 +24,8 @@
 	},
 	"devDependencies": {
 		"@workspace/eslint-config": "workspace:*",
-		"@workspace/prettier-config": "workspace:*",
 		"@workspace/typescript-config": "workspace:*",
-		"@workspace/shared": "workspace:*",
+		"@workspace/shared": "workspace:^",
 		"@nestjs/cli": "^11.0.0",
 		"@nestjs/schematics": "^11.0.0",
 		"@nestjs/testing": "^11.0.1",

@@ -75,11 +75,8 @@ importers:
       '@workspace/eslint-config':
         specifier: workspace:*
         version: link:../../packages/eslint-config
-      '@workspace/prettier-config':
-        specifier: workspace:*
-        version: link:../../packages/prettier-config
       '@workspace/shared':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../../packages/shared
       '@workspace/typescript-config':
         specifier: workspace:*

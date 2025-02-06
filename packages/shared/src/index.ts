@@ -1,4 +1,4 @@
-import { CreateUserDto } from './users/dtos/create-user.dto';
+import { CreateUserDto } from './users/dto/create-user.dto';
 import { User } from './users/entities/user.entity';
 
 export const users = {
@@ -8,4 +8,8 @@ export const users = {
 	entities: {
 		User,
 	},
+};
+
+export default {
+	users,
 };
