@@ -8,8 +8,11 @@ import {
 	Query,
 	Redirect,
 	Param,
+	Body,
 } from '@nestjs/common';
 import type { Request } from 'express';
+import type { CreateUserDto } from '@workspace/shared/users/dto/create-user.dto';
+
 // 컨트롤러 접두사
 @Controller('users')
 export class UserController {
@@ -29,7 +32,7 @@ export class UserController {
 	@Post()
 	@Header('cache-control', 'none')
 	@HttpCode(204)
-	create(): string {
+	create(@Body() createUserDto: CreateUserDto): string {
 		return 'This action adds a new user';
 	}
 
