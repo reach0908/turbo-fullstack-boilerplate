@@ -5,7 +5,7 @@ import { EmailService } from '../email/email.service';
 
 @Injectable()
 export class UsersService {
-	constructor(private readonly emailService: EmailService) {}
+	constructor(private emailService: EmailService) {}
 
 	async createUser(createUserDto: CreateUserDto): Promise<User> {
 		const { name, email, password } = createUserDto;
