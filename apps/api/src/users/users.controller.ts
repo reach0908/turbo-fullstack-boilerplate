@@ -19,7 +19,7 @@ export class UsersController {
 	@Post()
 	async createUser(@Body() createUserDto: CreateUserDto): Promise<void> {
 		await this.usersService.createUser(createUserDto);
-		console.log(createUserDto);
+		console.log('완료');
 	}
 
 	@Post('email-verify')

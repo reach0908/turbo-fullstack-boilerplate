@@ -2,22 +2,20 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from '@workspace/shared/users/dto/create-user.dto';
 import { User } from '@workspace/shared/users/entities/user.entity';
 import { EmailService } from '../email/email.service';
-
+import * as uuid from 'uuid';
 @Injectable()
 export class UsersService {
 	constructor(private emailService: EmailService) {}
 
-	async createUser(createUserDto: CreateUserDto): Promise<User> {
+	async createUser(createUserDto: CreateUserDto): Promise<void> {
 		const { name, email, password } = createUserDto;
 
-		await this.checkUserExists(email);
+		// await this.checkUserExists(email);
 
-		return {
-			id: 1,
-			name: createUserDto.name,
-			email: createUserDto.email,
-			password: createUserDto.password,
-		};
+		const signupVerifyToken = uuid.v1();
+
+		// await this.saveUser(name, email, password, signupVerifyToken);
+		await this.seneUserSignupEmail(email, signupVerifyToken);
 	}
 
 	async deleteUser(userId: User['id']): Promise<void> {
