@@ -1,7 +1,6 @@
 import { User } from '../entities/user.entity';
 
-export class CreateUserDto {
-	name: User['name'];
+export class UserLoginDto {
 	email: User['email'];
 	password: User['password'];
 }
