@@ -1,5 +1,5 @@
-import { CreateUserDto } from './users/dto/create-user.dto';
-import { User } from './users/entities/user.entity';
+import { CreateUserDto } from '@workspace/shared/users/dto/create-user.dto';
+import { User } from '@workspace/shared/users/entities/user.entity';
 
 export const users = {
 	dto: {

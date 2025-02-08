@@ -1,4 +1,4 @@
-import { User } from '../entities/user.entity';
+import { User } from '@workspace/shared/users/entities/user.entity';
 
 export class CreateUserDto {
 	id: User['id'];
