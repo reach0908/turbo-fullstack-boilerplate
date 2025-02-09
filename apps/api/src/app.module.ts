@@ -5,7 +5,7 @@ import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { emailConfig } from './config/email.config';
 import { validationSchema } from './config/validationSchema';
-
+import { DrizzleModule } from './drizzle/drizzle.module';
 @Module({
 	imports: [
 		ConfigModule.forRoot({
@@ -18,6 +18,7 @@ import { validationSchema } from './config/validationSchema';
 			validationSchema,
 		}),
 		UsersModule,
+		DrizzleModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

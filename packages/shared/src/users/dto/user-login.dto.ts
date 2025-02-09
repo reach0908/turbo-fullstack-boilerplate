@@ -1,6 +1,6 @@
-import { User } from '../entities/user.entity';
+import { UserEntity } from '../user.schema';
 
 export class UserLoginDto {
-	email: User['email'];
-	password: User['password'];
+	email: UserEntity['email'];
+	password: UserEntity['password'];
 }
