@@ -3,6 +3,7 @@ import { CreateUserDto } from '@workspace/shared/users/dto/create-user.dto';
 import { User } from '@workspace/shared/users/entities/user.entity';
 import { EmailService } from '../email/email.service';
 import * as uuid from 'uuid';
+import { UserLoginDto } from '@workspace/shared/users/dto/user-login.dto';
 @Injectable()
 export class UsersService {
 	constructor(private emailService: EmailService) {}
@@ -40,5 +41,13 @@ export class UsersService {
 		signupVerifyToken: string,
 	) {
 		await this.emailService.sendUserSignupEmail(email, signupVerifyToken);
+	}
+
+	async login(userLoginDto: UserLoginDto) {
+		throw new Error('Method not implemented');
+	}
+
+	async getUserInfo(userId: User['id']) {
+		throw new Error('Method not implemented');
 	}
 }
