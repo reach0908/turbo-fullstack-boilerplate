@@ -1,5 +1,5 @@
 import { Controller, Get } from "@nestjs/common";
-import { AppService } from "./app.service.js";
+import { AppService } from "#/app.service.js";
 
 /**
  * 컨트롤러는 들어오는 요청을 처리하고 클라이언트에게 응답을 다시 보내는 역할을 담당

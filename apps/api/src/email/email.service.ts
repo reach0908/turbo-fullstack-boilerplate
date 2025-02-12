@@ -2,7 +2,8 @@ import * as nodemailer from "nodemailer";
 import type { SentMessageInfo, Transporter } from "nodemailer";
 
 import { Inject, Injectable } from "@nestjs/common";
-import { emailConfig } from "../config/email.config.js";
+import { ConfigService } from "@nestjs/config";
+import { emailConfig } from "#/config/email.config.js";
 
 import type { ConfigType } from "@nestjs/config";
 

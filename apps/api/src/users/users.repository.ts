@@ -1,5 +1,5 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { DrizzleAsyncProvider } from "../drizzle/drizzle.provider.js";
+import { DrizzleAsyncProvider } from "#/drizzle/drizzle.provider.js";
 import { NodePgDatabase } from "drizzle-orm/node-postgres";
 import * as schema from "@workspace/api/drizzle/schema.js";
 import { CreateUserDto } from "@workspace/api/users/dto/create-user.dto.js";
