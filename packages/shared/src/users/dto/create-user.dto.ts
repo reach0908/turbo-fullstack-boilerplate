@@ -11,14 +11,14 @@ export class CreateUserDto {
 	@IsString()
 	@MinLength(1)
 	@MaxLength(30)
-	readonly name: UserEntity['name'];
+	readonly name!: UserEntity['name'];
 
 	@IsString()
 	@IsEmail()
 	@MaxLength(60)
-	readonly email: UserEntity['email'];
+	readonly email!: UserEntity['email'];
 
 	@IsString()
 	@Matches(/^[A-Za-z\d!@#$%^&*()]{8,30}$/)
-	readonly password: UserEntity['password'];
+	readonly password!: UserEntity['password'];
 }

@@ -42,7 +42,7 @@ export class UsersController {
 		@Query() emailVerifyDto: EmailVerifyDto,
 	): Promise<string> {
 		console.log(emailVerifyDto);
-		return;
+		return emailVerifyDto.signupVerifyToken;
 	}
 
 	@Post('login')

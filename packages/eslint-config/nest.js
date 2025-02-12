@@ -9,21 +9,19 @@ import tseslint from 'typescript-eslint';
 import { config as baseConfig } from './base.js';
 
 /**
- * A custom ESLint configuration for libraries that use Next.js.
+ * A custom ESLint configuration for NestJS projects.
  *
  * @type {import("eslint").Linter.Config}
  * */
 export const nestJsConfig = [
 	...baseConfig,
-	js.configs.recommended,
-	eslintConfigPrettier,
+	// NestJS-specific lint configurations
 	eslintPluginPrettierRecommended,
-	...tseslint.configs.recommended,
 	...tseslint.configs.recommendedTypeChecked,
 	{
 		languageOptions: {
 			globals: { ...globals.node, ...globals.jest },
-			ecmaVersion: 5,
+			ecmaVersion: 2020,
 			sourceType: 'module',
 			parserOptions: {
 				projectService: true,

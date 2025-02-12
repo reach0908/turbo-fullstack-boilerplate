@@ -13,6 +13,6 @@ export class AppController {
 
 	@Get()
 	getHello(): string {
-		return process.env.NEST_PORT;
+		return process.env.NEST_PORT || '3000';
 	}
 }

@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from '@workspace/shared/users/dto/create-user.dto';
 import { EmailService } from '../email/email.service';
 import * as uuid from 'uuid';
+
+import { CreateUserDto } from '@workspace/shared/users/dto/create-user.dto';
 import { UserLoginDto } from '@workspace/shared/users/dto/user-login.dto';
-import { UserEntity } from '@workspace/shared/users/user.schema';
+import type { UserEntity } from '@workspace/shared/users/user.schema';
+
 import { UsersRepository } from './users.repository';
 @Injectable()
 export class UsersService {
