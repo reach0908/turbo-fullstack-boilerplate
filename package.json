@@ -1,26 +1,28 @@
 {
-	"name": "shadcn-ui-monorepo",
-	"version": "0.0.1",
-	"private": true,
-	"type": "module",
-	"scripts": {
-		"build": "turbo build",
-		"dev": "turbo dev",
-		"lint": "turbo lint",
-		"format": "prettier --write \"**/*.{js,ts,tsx,md}\"",
-		"ui:add": "pnpm --filter ui ui:add",
-		"clean": "rm -rf .turbo && find . -name 'node_modules' -type d -prune -exec rm -rf '{}' + && find . -name '.next' -type d -prune -exec rm -rf '{}' + && rm -f package-lock.json + && pnpm install"
-	},
-	"devDependencies": {
-		"@workspace/eslint-config": "workspace:*",
-		"@workspace/prettier-config": "workspace:*",
-		"@workspace/typescript-config": "workspace:*",
-		"prettier": "^3.2.5",
-		"turbo": "^2.4.0",
-		"typescript": "5.5.4"
-	},
-	"packageManager": "pnpm@9.12.3",
-	"engines": {
-		"node": ">=20"
-	}
+  "name": "shadcn-ui-monorepo",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "format": "prettier --write \"**/*.{js,ts,tsx,md}\"",
+    "ui:add": "pnpm --filter ui ui:add",
+    "clean": "rm -rf .turbo && find . -name 'node_modules' -type d -prune -exec rm -rf '{}' + && find . -name '.next' -type d -prune -exec rm -rf '{}' + && rm -f package-lock.json + && pnpm install"
+  },
+  "devDependencies": {
+    "@workspace/eslint-config": "workspace:*",
+    "@workspace/prettier-config": "workspace:*",
+    "@workspace/typescript-config": "workspace:*",
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+    "eslint-plugin-import": "^2.29.1",
+    "prettier": "^3.2.5",
+    "turbo": "^2.4.0",
+    "typescript": "5.5.4"
+  },
+  "packageManager": "pnpm@9.12.3",
+  "engines": {
+    "node": ">=20"
+  }
 }
