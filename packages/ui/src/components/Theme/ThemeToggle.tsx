@@ -1,10 +1,10 @@
 "use client";
 
+import { Button } from "@workspace/ui/components/button";
 import { MoonIcon } from "@workspace/ui/components/moon";
 import { SunIcon } from "@workspace/ui/components/sun";
 import { useTheme } from "next-themes";
 
-import { Button } from "@workspace/ui/components/button";
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();

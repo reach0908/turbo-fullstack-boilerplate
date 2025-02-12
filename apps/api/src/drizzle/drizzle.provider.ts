@@ -1,7 +1,7 @@
+import { ConfigService } from "@nestjs/config";
+import * as schema from "@workspace/api/drizzle/schema.js";
 import { drizzle, NodePgDatabase } from "drizzle-orm/node-postgres";
 import pg from "pg";
-import * as schema from "@workspace/api/drizzle/schema.js";
-import { ConfigService } from "@nestjs/config";
 
 export const DrizzleAsyncProvider = "DrizzleAsyncProvider";
 

@@ -1,9 +1,11 @@
+import * as path from "path";
+
+import { ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
+import * as dotenv from "dotenv";
+
 import { AppModule } from "#/app.module.js";
 
-import * as dotenv from "dotenv";
-import * as path from "path";
-import { ValidationPipe } from "@nestjs/common";
 dotenv.config({
   path: path.resolve(
     process.env.NODE_ENV === "production" ? ".env" : ".env.development.local",

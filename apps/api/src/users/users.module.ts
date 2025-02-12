@@ -1,9 +1,10 @@
 import { Module } from "@nestjs/common";
-import { UsersController } from "#/users/users.controller.js";
-import { UsersService } from "#/users/users.service.js";
-import { EmailModule } from "#/email/email.module.js";
-import { UsersRepository } from "#/users/users.repository.js";
+
 import { DrizzleModule } from "#/drizzle/drizzle.module.js";
+import { EmailModule } from "#/email/email.module.js";
+import { UsersController } from "#/users/users.controller.js";
+import { UsersRepository } from "#/users/users.repository.js";
+import { UsersService } from "#/users/users.service.js";
 
 @Module({
   controllers: [UsersController],

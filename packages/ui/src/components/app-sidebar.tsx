@@ -1,6 +1,17 @@
 "use client";
 
-import type * as React from "react";
+
+import { NavMain } from "@workspace/ui/components/nav-main";
+import { NavProjects } from "@workspace/ui/components/nav-projects";
+import { NavUser } from "@workspace/ui/components/nav-user";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarRail,
+} from "@workspace/ui/components/sidebar";
+import { TeamSwitcher } from "@workspace/ui/components/team-switcher";
 import {
   AudioWaveform,
   BookOpen,
@@ -14,17 +25,7 @@ import {
   SquareTerminal,
 } from "lucide-react";
 
-import { NavMain } from "@workspace/ui/components/nav-main";
-import { NavProjects } from "@workspace/ui/components/nav-projects";
-import { NavUser } from "@workspace/ui/components/nav-user";
-import { TeamSwitcher } from "@workspace/ui/components/team-switcher";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-  SidebarRail,
-} from "@workspace/ui/components/sidebar";
+import type * as React from "react";
 
 // This is sample data.
 const data = {

@@ -15,8 +15,6 @@
     "@workspace/eslint-config": "workspace:*",
     "@workspace/prettier-config": "workspace:*",
     "@workspace/typescript-config": "workspace:*",
-    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
-    "eslint-plugin-import": "^2.29.1",
     "prettier": "^3.2.5",
     "turbo": "^2.4.0",
     "typescript": "5.5.4"
