@@ -5,7 +5,10 @@
   "private": true,
   "scripts": {
     "build": "tsc -b -v",
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\""
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
+    "db:generate": "NODE_OPTIONS='--loader ts-node/esm' drizzle-kit generate --config drizzle.config.ts",
+    "db:migrate": "NODE_OPTIONS='--loader ts-node/esm' drizzle-kit migrate --config drizzle.config.ts",
+    "db:push": "NODE_OPTIONS='--loader ts-node/esm' drizzle-kit push --config drizzle.config.mjs"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

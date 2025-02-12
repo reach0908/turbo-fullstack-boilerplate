@@ -6,6 +6,8 @@
     "outDir": "dist",
     "declaration": true,
     "declarationMap": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
     "paths": {
       "@workspace/api/*": ["*"]
     }
