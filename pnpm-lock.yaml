@@ -117,12 +117,12 @@ importers:
       '@types/uuid':
         specifier: ^10.0.0
         version: 10.0.0
+      '@workspace/api':
+        specifier: workspace:*
+        version: link:../../packages/api
       '@workspace/eslint-config':
         specifier: workspace:*
         version: link:../../packages/eslint-config
-      '@workspace/shared':
-        specifier: workspace:*
-        version: link:../../packages/shared
       '@workspace/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
@@ -197,55 +197,7 @@ importers:
         specifier: ^5
         version: 5.7.2
 
-  packages/eslint-config:
-    devDependencies:
-      '@next/eslint-plugin-next':
-        specifier: ^15.1.0
-        version: 15.1.0
-      '@typescript-eslint/eslint-plugin':
-        specifier: ^8.15.0
-        version: 8.18.0(@typescript-eslint/parser@8.18.0(eslint@9.17.0(jiti@2.4.2))(typescript@5.7.2))(eslint@9.17.0(jiti@2.4.2))(typescript@5.7.2)
-      '@typescript-eslint/parser':
-        specifier: ^8.15.0
-        version: 8.18.0(eslint@9.17.0(jiti@2.4.2))(typescript@5.7.2)
-      eslint:
-        specifier: ^9.15.0
-        version: 9.17.0(jiti@2.4.2)
-      eslint-config-prettier:
-        specifier: ^9.1.0
-        version: 9.1.0(eslint@9.17.0(jiti@2.4.2))
-      eslint-plugin-only-warn:
-        specifier: ^1.1.0
-        version: 1.1.0
-      eslint-plugin-prettier:
-        specifier: ^5.2.2
-        version: 5.2.3(@types/eslint@9.6.1)(eslint-config-prettier@9.1.0(eslint@9.17.0(jiti@2.4.2)))(eslint@9.17.0(jiti@2.4.2))(prettier@3.4.2)
-      eslint-plugin-react:
-        specifier: ^7.37.2
-        version: 7.37.2(eslint@9.17.0(jiti@2.4.2))
-      eslint-plugin-react-hooks:
-        specifier: ^5.0.0
-        version: 5.1.0(eslint@9.17.0(jiti@2.4.2))
-      eslint-plugin-turbo:
-        specifier: ^2.3.0
-        version: 2.3.3(eslint@9.17.0(jiti@2.4.2))
-      globals:
-        specifier: ^15.12.0
-        version: 15.13.0
-      typescript:
-        specifier: ^5.3.3
-        version: 5.7.2
-      typescript-eslint:
-        specifier: ^8.15.0
-        version: 8.18.1(eslint@9.17.0(jiti@2.4.2))(typescript@5.7.2)
-
-  packages/prettier-config:
-    devDependencies:
-      prettier:
-        specifier: ^3.4.2
-        version: 3.4.2
-
-  packages/shared:
+  packages/api:
     dependencies:
       '@nestjs/mapped-types':
         specifier: '*'
@@ -293,6 +245,54 @@ importers:
       typescript:
         specifier: ^5.7.3
         version: 5.7.3
+
+  packages/eslint-config:
+    devDependencies:
+      '@next/eslint-plugin-next':
+        specifier: ^15.1.0
+        version: 15.1.0
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^8.15.0
+        version: 8.18.0(@typescript-eslint/parser@8.18.0(eslint@9.17.0(jiti@2.4.2))(typescript@5.7.2))(eslint@9.17.0(jiti@2.4.2))(typescript@5.7.2)
+      '@typescript-eslint/parser':
+        specifier: ^8.15.0
+        version: 8.18.0(eslint@9.17.0(jiti@2.4.2))(typescript@5.7.2)
+      eslint:
+        specifier: ^9.15.0
+        version: 9.17.0(jiti@2.4.2)
+      eslint-config-prettier:
+        specifier: ^9.1.0
+        version: 9.1.0(eslint@9.17.0(jiti@2.4.2))
+      eslint-plugin-only-warn:
+        specifier: ^1.1.0
+        version: 1.1.0
+      eslint-plugin-prettier:
+        specifier: ^5.2.2
+        version: 5.2.3(@types/eslint@9.6.1)(eslint-config-prettier@9.1.0(eslint@9.17.0(jiti@2.4.2)))(eslint@9.17.0(jiti@2.4.2))(prettier@3.4.2)
+      eslint-plugin-react:
+        specifier: ^7.37.2
+        version: 7.37.2(eslint@9.17.0(jiti@2.4.2))
+      eslint-plugin-react-hooks:
+        specifier: ^5.0.0
+        version: 5.1.0(eslint@9.17.0(jiti@2.4.2))
+      eslint-plugin-turbo:
+        specifier: ^2.3.0
+        version: 2.3.3(eslint@9.17.0(jiti@2.4.2))
+      globals:
+        specifier: ^15.12.0
+        version: 15.13.0
+      typescript:
+        specifier: ^5.3.3
+        version: 5.7.2
+      typescript-eslint:
+        specifier: ^8.15.0
+        version: 8.18.1(eslint@9.17.0(jiti@2.4.2))(typescript@5.7.2)
+
+  packages/prettier-config:
+    devDependencies:
+      prettier:
+        specifier: ^3.4.2
+        version: 3.4.2
 
   packages/typescript-config: {}
 

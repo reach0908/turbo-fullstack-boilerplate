@@ -2,9 +2,9 @@ import { Injectable } from "@nestjs/common";
 import { EmailService } from "../email/email.service.js";
 import * as uuid from "uuid";
 
-import { CreateUserDto } from "@workspace/shared/users/dto/create-user.dto.js";
-import { UserLoginDto } from "@workspace/shared/users/dto/user-login.dto.js";
-import type { UserEntity } from "@workspace/shared/users/user.schema.js";
+import { CreateUserDto } from "@workspace/api/users/dto/create-user.dto.js";
+import { UserLoginDto } from "@workspace/api/users/dto/user-login.dto.js";
+import type { UserEntity } from "@workspace/api/users/user.schema.js";
 
 import { UsersRepository } from "./users.repository.js";
 @Injectable()

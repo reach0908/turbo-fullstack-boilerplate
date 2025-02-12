@@ -10,10 +10,10 @@ import {
   Post,
   Query,
 } from "@nestjs/common";
-import { CreateUserDto } from "@workspace/shared/users/dto/create-user.dto.js";
-import { EmailVerifyDto } from "@workspace/shared/users/dto/email-verify.dto.js";
-import { UserLoginDto } from "@workspace/shared/users/dto/user-login.dto.js";
-import { UserEntity } from "@workspace/shared/users/user.schema.js";
+import { CreateUserDto } from "@workspace/api/users/dto/create-user.dto.js";
+import { EmailVerifyDto } from "@workspace/api/users/dto/email-verify.dto.js";
+import { UserLoginDto } from "@workspace/api/users/dto/user-login.dto.js";
+import { UserEntity } from "@workspace/api/users/user.schema.js";
 import { UsersService } from "./users.service.js";
 
 @Controller("users")
