@@ -4,8 +4,6 @@
 		"baseUrl": "src",
 		"rootDir": "src",
 		"outDir": "dist",
-		"esModuleInterop": true,
-		"allowJs": true,
 		"declaration": true,
 		"declarationMap": true,
 		"paths": {
