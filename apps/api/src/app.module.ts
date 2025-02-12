@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { UsersModule } from './users/users.module';
+import { AppController } from './app.controller.js';
+import { AppService } from './app.service.js';
+import { UsersModule } from './users/users.module.js';
 import { ConfigModule } from '@nestjs/config';
-import { emailConfig } from './config/email.config';
-import { validationSchema } from './config/validationSchema';
-import { DrizzleModule } from './drizzle/drizzle.module';
+import { emailConfig } from './config/email.config.js';
+import { validationSchema } from './config/validationSchema.js';
+import { DrizzleModule } from './drizzle/drizzle.module.js';
 @Module({
 	imports: [
 		ConfigModule.forRoot({

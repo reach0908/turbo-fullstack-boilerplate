@@ -5,7 +5,7 @@ import {
 	MaxLength,
 	MinLength,
 } from 'class-validator';
-import { UserEntity } from '../user.schema';
+import { UserEntity } from '../user.schema.js';
 
 export class CreateUserDto {
 	@IsString()

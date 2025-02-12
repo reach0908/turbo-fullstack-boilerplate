@@ -1,4 +1,4 @@
-import { UserEntity } from '../user.schema';
+import { UserEntity } from '../user.schema.js';
 
 export class UserLoginDto {
 	email!: UserEntity['email'];

@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { EmailService } from '../email/email.service';
+import { EmailService } from '../email/email.service.js';
 import * as uuid from 'uuid';
 
-import { CreateUserDto } from '@workspace/shared/users/dto/create-user.dto';
-import { UserLoginDto } from '@workspace/shared/users/dto/user-login.dto';
-import type { UserEntity } from '@workspace/shared/users/user.schema';
+import { CreateUserDto } from '@workspace/shared/users/dto/create-user.dto.js';
+import { UserLoginDto } from '@workspace/shared/users/dto/user-login.dto.js';
+import type { UserEntity } from '@workspace/shared/users/user.schema.js';
 
-import { UsersRepository } from './users.repository';
+import { UsersRepository } from './users.repository.js';
 @Injectable()
 export class UsersService {
 	constructor(
