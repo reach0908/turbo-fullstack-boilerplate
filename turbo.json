@@ -5,19 +5,29 @@
 		"build": {
 			"dependsOn": ["^build"],
 			"inputs": ["$TURBO_DEFAULT$", ".env*"],
-			"outputs": ["dist/**", ".next/**", "!.next/cache/**"]
+			"outputs": [".next/**", "!.next/cache/**"]
 		},
 		"lint": {
-			"dependsOn": ["^lint"]
+			"dependsOn": ["^lint"],
+			"inputs": ["src/**/*.{ts,tsx}", "app/**/*.{ts,tsx}"],
+			"outputs": []
+		},
+		"test": {
+			"dependsOn": ["^test"],
+			"inputs": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}"],
+			"outputs": []
+		},
+		"type-check": {
+			"dependsOn": ["^type-check"],
+			"inputs": ["src/**/*.{ts,tsx}", "app/**/*.{ts,tsx}"],
+			"outputs": []
 		},
 		"check-types": {
 			"dependsOn": ["^check-types"]
 		},
 		"dev": {
-			"dependsOn": ["^build"],
 			"cache": false,
 			"persistent": true
 		}
-	},
-	"globalEnv": ["NODE_ENV", "NEST_PORT"]
+	}
 }

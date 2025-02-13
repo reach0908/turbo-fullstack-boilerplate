@@ -1,1 +1,0 @@
-{"root":["./src/index.ts","./src/drizzle/schema.ts","./src/users/user.schema.ts","./src/users/dto/create-user.dto.ts","./src/users/dto/email-verify.dto.ts","./src/users/dto/user-login.dto.ts"],"version":"5.7.3"}
