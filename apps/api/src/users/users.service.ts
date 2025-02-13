@@ -1,65 +1,61 @@
-import { Injectable } from "@nestjs/common";
-import { CreateUserDto } from "@workspace/api/users/dto/create-user.dto.js";
-import { UserLoginDto } from "@workspace/api/users/dto/user-login.dto.js";
-import * as uuid from "uuid";
+import { Inject, Injectable } from '@nestjs/common';
+import { DatabaseAsyncProvider } from 'src/database/database.provider';
+import { NodePgDatabase } from 'drizzle-orm/node-postgres';
+import {
+	UserEntity,
+	NewUserEntity,
+	users,
+} from 'src/database/schemas/users.schema';
+import * as schema from 'src/database/schema';
+import { eq } from 'drizzle-orm';
 
-import type { UserEntity } from "@workspace/api/users/user.schema.js";
-
-import { EmailService } from "#/email/email.service.js";
-import { UsersRepository } from "#/users/users.repository.js";
 @Injectable()
 export class UsersService {
-  constructor(
-    private emailService: EmailService,
-    private readonly userRepository: UsersRepository,
-  ) {}
+	constructor(
+		@Inject(DatabaseAsyncProvider)
+		private readonly db: NodePgDatabase<typeof schema>,
+	) {}
 
-  async getAllUsers(offset: number, limit: number): Promise<UserEntity[]> {
-    return [];
-  }
+	async findById(id: number): Promise<UserEntity | null> {
+		const result = await this.db
+			.select()
+			.from(users)
+			.where(eq(users.id, id));
 
-  async createUser(createUserDto: CreateUserDto): Promise<UserEntity> {
-    const { email } = createUserDto;
+		return result[0] || null;
+	}
 
-    // await this.checkUserExists(email);
+	async findByEmail(email: string): Promise<UserEntity | null> {
+		const result = await this.db
+			.select()
+			.from(users)
+			.where(eq(users.email, email));
 
-    const signupVerifyToken = uuid.v1();
+		return result[0] || null;
+	}
 
-    const user = await this.userRepository.createUser(createUserDto);
-    await this.seneUserSignupEmail(email, signupVerifyToken);
+	createUser(userInfo: NewUserEntity): Promise<UserEntity> {
+		const user = this.db
+			.insert(users)
+			.values(userInfo)
+			.returning()
+			.then((rows) => rows[0]);
 
-    return user;
-  }
+		return user;
+	}
 
-  async deleteUser(userId: UserEntity["id"]): Promise<void> {
-    console.log(userId);
-  }
+	updateUser(userInfo: Partial<UserEntity>): Promise<UserEntity> {
+		if (!userInfo.id) {
+			throw new Error('User ID is required');
+		}
 
-  private checkUserExists(email: UserEntity["email"]) {
-    return false;
-  }
+		const user = this.db
+			.update(users)
+			.set(userInfo)
+			.where(eq(users.id, userInfo.id))
+			.returning()
+			.then((rows) => rows[0]);
 
-  private saveUser(
-    name: UserEntity["name"],
-    email: UserEntity["email"],
-    password: UserEntity["password"],
-    signupVerifyToken: string,
-  ) {
-    return;
-  }
-
-  private async seneUserSignupEmail(
-    email: UserEntity["email"],
-    signupVerifyToken: string,
-  ) {
-    await this.emailService.sendUserSignupEmail(email, signupVerifyToken);
-  }
-
-  async login(userLoginDto: UserLoginDto) {
-    throw new Error("Method not implemented");
-  }
-
-  async getUserInfo(userId: UserEntity["id"]) {
-    throw new Error("Method not implemented");
-  }
+		return user;
+	}
 }

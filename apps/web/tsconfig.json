@@ -10,12 +10,7 @@
 			{
 				"name": "next"
 			}
-		],
-		"lib": ["dom", "dom.iterable", "esnext"],
-		"skipLibCheck": true,
-		"incremental": true,
-		"resolveJsonModule": true,
-		"isolatedModules": true
+		]
 	},
 	"include": [
 		"next-env.d.ts",

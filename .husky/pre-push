@@ -1,0 +1,2 @@
+# Run full type check, lint, and test across all workspaces before push
+pnpm turbo type-check lint test 
