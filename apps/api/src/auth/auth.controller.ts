@@ -49,8 +49,17 @@ export class AuthController {
 		@Res() res: Response,
 	) {
 		try {
+			const user = req.user;
+			const frontendUrl =
+				this.configService.get<string>('app.frontendUrl');
+
+			this.logger.debug('Discord callback received:', {
+				user,
+				frontendUrl,
+			});
+
 			const { accessToken, refreshToken } =
-				this.authService.generateTokens(req.user);
+				this.authService.generateTokens(user);
 
 			// 액세스 토큰 쿠키 설정
 			res.cookie('access_token', accessToken, {
@@ -67,22 +76,23 @@ export class AuthController {
 				secure: process.env.NODE_ENV === 'production',
 				sameSite: 'lax',
 				maxAge: 7 * 24 * 60 * 60 * 1000, // 7일
-				path: '/auth/refresh', // 리프레시 엔드포인트에서만 접근 가능
+				path: '/', // 모든 경로에서 접근 가능하도록 수정
 			});
 
+			const redirectUrl = frontendUrl || 'http://localhost:3000';
+			this.logger.debug('Redirecting to frontend:', { redirectUrl });
+
 			// 프론트엔드 페이지로 리다이렉트
-			return res.redirect(
-				this.configService.get('app.frontendUrl') ||
-					'http://localhost:3000',
-			);
+			return res.redirect(redirectUrl);
 		} catch (error) {
 			this.logger.error('Discord OAuth 로그인 실패:', error);
+			const frontendUrl =
+				this.configService.get<string>('app.frontendUrl') ||
+				'http://localhost:3000';
 			// 에러 발생 시 에러 페이지로 리다이렉트
 			return res
 				.status(HttpStatus.UNAUTHORIZED)
-				.redirect(
-					`${this.configService.get('app.frontendUrl') || 'http://localhost:3000'}/error`,
-				);
+				.redirect(`${frontendUrl}/error`);
 		}
 	}
 

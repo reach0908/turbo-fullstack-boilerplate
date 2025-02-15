@@ -7,13 +7,23 @@ import { AuthController } from './auth.controller';
 import { PassportModule } from '@nestjs/passport';
 import { DiscordStrategy } from './strategies/discord.strategy';
 import { JwtModule } from '@nestjs/jwt';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
 	imports: [
 		DatabaseModule,
 		UsersModule,
 		PassportModule.register({ defaultStrategy: 'discord' }),
-		JwtModule.register({}),
+		JwtModule.registerAsync({
+			imports: [ConfigModule],
+			inject: [ConfigService],
+			useFactory: (configService: ConfigService) => ({
+				secret: configService.get<string>('auth.jwt.secret'),
+				signOptions: {
+					expiresIn: '15m', // 액세스 토큰 15분
+				},
+			}),
+		}),
 	],
 	controllers: [AuthController],
 	providers: [AuthService, EncryptionUtil, DiscordStrategy],

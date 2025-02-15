@@ -1,11 +1,12 @@
-import type { Metadata } from 'next';
+'use client';
 
-export const metadata: Metadata = {
-	title: 'Login',
-	description: 'Login to your account',
-};
+import { Button } from '@workspace/ui/components/button';
 
 export default function LoginPage() {
+	const handleDiscordLogin = () => {
+		window.location.href = 'http://localhost:3001/auth/discord';
+	};
+
 	return (
 		<div className="space-y-6">
 			<div className="space-y-2 text-center">
@@ -15,9 +16,13 @@ export default function LoginPage() {
 				</p>
 			</div>
 			<div className="space-y-4">
-				<button className="w-full flex items-center justify-center gap-2 rounded-lg bg-[#5865F2] px-4 py-2 text-white hover:bg-[#4752C4] transition-colors">
+				<Button
+					variant="default"
+					onClick={handleDiscordLogin}
+					className="w-full"
+				>
 					Continue with Discord
-				</button>
+				</Button>
 			</div>
 		</div>
 	);
