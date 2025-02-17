@@ -8,6 +8,7 @@ import { PassportModule } from '@nestjs/passport';
 import { DiscordStrategy } from './strategies/discord.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Module({
 	imports: [
@@ -18,7 +19,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 			imports: [ConfigModule],
 			inject: [ConfigService],
 			useFactory: (configService: ConfigService) => ({
-				secret: configService.get<string>('auth.jwt.secret'),
+				secret: configService.getOrThrow('auth.jwt.secret'),
 				signOptions: {
 					expiresIn: '15m', // 액세스 토큰 15분
 				},
@@ -26,7 +27,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 		}),
 	],
 	controllers: [AuthController],
-	providers: [AuthService, EncryptionUtil, DiscordStrategy],
+	providers: [AuthService, EncryptionUtil, DiscordStrategy, JwtStrategy],
 	exports: [AuthService],
 })
 export class AuthModule {}

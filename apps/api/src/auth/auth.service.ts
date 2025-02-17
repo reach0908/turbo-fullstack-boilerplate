@@ -31,7 +31,7 @@ export class AuthService {
 		@Inject(DatabaseAsyncProvider)
 		private readonly db: NodePgDatabase<typeof schema>,
 		private readonly encryptionUtil: EncryptionUtil,
-		private readonly usersService: UsersService,
+		public readonly usersService: UsersService,
 		private readonly jwtService: JwtService,
 		private readonly configService: ConfigService,
 	) {}

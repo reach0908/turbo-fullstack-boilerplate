@@ -1,15 +1,23 @@
-import type { Metadata } from 'next';
+'use client';
 
-export const metadata: Metadata = {
-	title: 'Dashboard',
-	description: 'User dashboard and management',
-};
+import { useAuth } from '@/lib/auth/auth-context';
 
 export default function DashboardLayout({
 	children,
 }: {
 	children: React.ReactNode;
 }) {
+	const { logout } = useAuth();
+
+	const handleLogout = async () => {
+		try {
+			await logout();
+			// 로그아웃 후 자동으로 로그인 페이지로 리다이렉트됩니다 (useRequireAuth 훅에 의해)
+		} catch (error) {
+			console.error('로그아웃 실패:', error);
+		}
+	};
+
 	return (
 		<div className="min-h-screen bg-gray-100">
 			<nav className="bg-white shadow-sm">
@@ -19,7 +27,10 @@ export default function DashboardLayout({
 							<span className="text-xl font-bold">Dashboard</span>
 						</div>
 						<div className="flex items-center">
-							<button className="ml-4 text-gray-600 hover:text-gray-900">
+							<button
+								onClick={handleLogout}
+								className="ml-4 text-gray-600 hover:text-gray-900 px-4 py-2 rounded-md hover:bg-gray-100 transition-colors"
+							>
 								Logout
 							</button>
 						</div>

@@ -1,11 +1,10 @@
-import type { Metadata } from 'next';
+'use client';
 
-export const metadata: Metadata = {
-	title: 'Dashboard',
-	description: 'User dashboard overview',
-};
+import { useAuth } from '@/lib/auth/auth-context';
 
 export default function DashboardPage() {
+	const { user } = useAuth();
+
 	return (
 		<div className="space-y-6">
 			<div>
@@ -18,7 +17,7 @@ export default function DashboardPage() {
 				<div className="rounded-lg border bg-card text-card-foreground shadow-sm p-6">
 					<h3 className="font-semibold">Quick Stats</h3>
 					<p className="text-sm text-muted-foreground">
-						Your activity overview
+						{user?.name}
 					</p>
 				</div>
 			</div>

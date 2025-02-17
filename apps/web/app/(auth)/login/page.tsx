@@ -1,11 +1,10 @@
 'use client';
 
 import { Button } from '@workspace/ui/components/button';
+import { useAuth } from '@/lib/auth/auth-context';
 
 export default function LoginPage() {
-	const handleDiscordLogin = () => {
-		window.location.href = 'http://localhost:3001/auth/discord';
-	};
+	const { login } = useAuth();
 
 	return (
 		<div className="space-y-6">
@@ -16,11 +15,7 @@ export default function LoginPage() {
 				</p>
 			</div>
 			<div className="space-y-4">
-				<Button
-					variant="default"
-					onClick={handleDiscordLogin}
-					className="w-full"
-				>
+				<Button variant="default" onClick={login} className="w-full">
 					Continue with Discord
 				</Button>
 			</div>

@@ -10,16 +10,10 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthGuard } from '@nestjs/passport';
-import { Response, Request } from 'express';
+import { Response } from 'express';
 import { DiscordOAuthRequest } from './interface/oauth.type';
 import { ConfigService } from '@nestjs/config';
-
-interface CookieRequest extends Request {
-	cookies: {
-		refresh_token?: string;
-		[key: string]: string | undefined;
-	};
-}
+import { RequestWithCookies } from './interface/request.type';
 
 @Controller('auth')
 export class AuthController {
@@ -61,35 +55,32 @@ export class AuthController {
 			const { accessToken, refreshToken } =
 				this.authService.generateTokens(user);
 
-			// 액세스 토큰 쿠키 설정
+			// 액세스 토큰 설정
 			res.cookie('access_token', accessToken, {
 				httpOnly: true,
 				secure: process.env.NODE_ENV === 'production',
 				sameSite: 'lax',
 				maxAge: 15 * 60 * 1000, // 15분
-				path: '/',
 			});
 
-			// 리프레시 토큰 쿠키 설정
+			// 리프레시 토큰 설정
 			res.cookie('refresh_token', refreshToken, {
 				httpOnly: true,
 				secure: process.env.NODE_ENV === 'production',
 				sameSite: 'lax',
 				maxAge: 7 * 24 * 60 * 60 * 1000, // 7일
-				path: '/', // 모든 경로에서 접근 가능하도록 수정
+				path: '/api/auth/refresh',
 			});
 
 			const redirectUrl = frontendUrl || 'http://localhost:3000';
 			this.logger.debug('Redirecting to frontend:', { redirectUrl });
 
-			// 프론트엔드 페이지로 리다이렉트
 			return res.redirect(redirectUrl);
 		} catch (error) {
 			this.logger.error('Discord OAuth 로그인 실패:', error);
 			const frontendUrl =
 				this.configService.get<string>('app.frontendUrl') ||
 				'http://localhost:3000';
-			// 에러 발생 시 에러 페이지로 리다이렉트
 			return res
 				.status(HttpStatus.UNAUTHORIZED)
 				.redirect(`${frontendUrl}/error`);
@@ -100,7 +91,7 @@ export class AuthController {
 	 * 토큰 갱신 엔드포인트
 	 */
 	@Get('refresh')
-	async refreshTokens(@Req() req: CookieRequest, @Res() res: Response) {
+	async refreshTokens(@Req() req: RequestWithCookies, @Res() res: Response) {
 		try {
 			const refreshToken = req.cookies.refresh_token;
 			if (!refreshToken) {
@@ -114,22 +105,21 @@ export class AuthController {
 				);
 			}
 
-			// 새로운 액세스 토큰 쿠키 설정
+			// 새로운 액세스 토큰 설정
 			res.cookie('access_token', tokens.accessToken, {
 				httpOnly: true,
 				secure: process.env.NODE_ENV === 'production',
 				sameSite: 'lax',
 				maxAge: 15 * 60 * 1000, // 15분
-				path: '/',
 			});
 
-			// 새로운 리프레시 토큰 쿠키 설정
+			// 새로운 리프레시 토큰 설정
 			res.cookie('refresh_token', tokens.refreshToken, {
 				httpOnly: true,
 				secure: process.env.NODE_ENV === 'production',
 				sameSite: 'lax',
 				maxAge: 7 * 24 * 60 * 60 * 1000, // 7일
-				path: '/auth/refresh',
+				path: '/api/auth/refresh',
 			});
 
 			return res.json({ success: true });
@@ -147,5 +137,20 @@ export class AuthController {
 				message: '토큰 갱신에 실패했습니다.',
 			});
 		}
+	}
+
+	/**
+	 * 로그아웃
+	 */
+	@Get('logout')
+	logout(@Res() res: Response) {
+		// 모든 인증 쿠키 제거
+		res.clearCookie('access_token');
+		res.clearCookie('refresh_token', { path: '/api/auth/refresh' });
+
+		const frontendUrl =
+			this.configService.get<string>('app.frontendUrl') ||
+			'http://localhost:3000';
+		return res.redirect(frontendUrl);
 	}
 }
