@@ -1,14 +1,42 @@
+/**
+ * 사용자 엔티티 타입
+ */
 export interface User {
-	id: string;
+	id: number;
+	createdAt: Date;
+	updatedAt: Date;
+	deletedAt?: Date | null;
+	username: string;
 	email: string;
-	name: string;
+	avatar?: string | null;
 	// 필요한 다른 사용자 정보들을 추가할 수 있습니다
 }
 
+/**
+ * 인증 상태 타입
+ */
 export interface AuthState {
 	user: User | null;
 	isAuthenticated: boolean;
 	isLoading: boolean;
+	error?: Error | null;
+}
+
+/**
+ * useRequireAuth hook 옵션 타입
+ */
+export interface UseRequireAuthOptions {
+	redirectTo?: string;
+	onRedirect?: () => void;
+}
+
+/**
+ * useAutoRefresh hook 옵션 타입
+ */
+export interface UseAutoRefreshOptions {
+	interval?: number;
+	enabled?: boolean;
+	onError?: (error: unknown) => void;
 }
 
 export interface AuthContextType extends AuthState {
