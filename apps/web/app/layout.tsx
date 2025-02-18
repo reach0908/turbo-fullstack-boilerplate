@@ -1,8 +1,9 @@
 import { Geist, Geist_Mono } from 'next/font/google';
+import { Providers } from '@/components/providers';
+import { prefetchUser } from '@/lib/auth/actions/user';
+import { dehydrate, QueryClient } from '@tanstack/react-query';
 
 import '@workspace/ui/globals.css';
-import { Providers } from '@/components/providers';
-import { AuthProvider } from '@/lib/auth/auth-context';
 
 const fontSans = Geist({
 	subsets: ['latin'],
@@ -14,19 +15,36 @@ const fontMono = Geist_Mono({
 	variable: '--font-mono',
 });
 
-export default function RootLayout({
+export default async function RootLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	const queryClient = new QueryClient({
+		defaultOptions: {
+			queries: {
+				staleTime: 60 * 1000, // 1분
+				refetchOnWindowFocus: false,
+			},
+		},
+	});
+
+	// 서버 사이드에서 사용자 데이터 프리페치
+	await queryClient.prefetchQuery({
+		queryKey: ['user'],
+		queryFn: prefetchUser,
+	});
+
+	const dehydratedState = dehydrate(queryClient);
+
 	return (
-		<html lang="en" suppressHydrationWarning>
+		<html lang="ko" suppressHydrationWarning>
 			<body
-				className={`${fontSans.variable} ${fontMono.variable} font-sans antialiased `}
+				className={`${fontSans.variable} ${fontMono.variable} font-sans antialiased`}
 			>
-				<AuthProvider>
-					<Providers>{children}</Providers>
-				</AuthProvider>
+				<Providers dehydratedState={dehydratedState}>
+					{children}
+				</Providers>
 			</body>
 		</html>
 	);

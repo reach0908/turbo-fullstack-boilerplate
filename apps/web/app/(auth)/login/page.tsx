@@ -1,10 +1,13 @@
 'use client';
 
+import { useSearchParams } from 'next/navigation';
 import { Button } from '@workspace/ui/components/button';
-import { useAuth } from '@/lib/auth/auth-context';
+import { useAuth } from '@/lib/auth/hooks/use-auth';
 
 export default function LoginPage() {
 	const { login } = useAuth();
+	const searchParams = useSearchParams();
+	const error = searchParams.get('error');
 
 	return (
 		<div className="space-y-6">
@@ -13,9 +16,18 @@ export default function LoginPage() {
 				<p className="text-gray-500">
 					Enter your credentials to access your account
 				</p>
+				{error && (
+					<p className="text-sm text-red-500" role="alert">
+						{error}
+					</p>
+				)}
 			</div>
 			<div className="space-y-4">
-				<Button variant="default" onClick={login} className="w-full">
+				<Button
+					variant="default"
+					onClick={() => login('discord')}
+					className="w-full"
+				>
 					Continue with Discord
 				</Button>
 			</div>
