@@ -17,7 +17,7 @@ export default function DashboardPage() {
 				<div className="rounded-lg border bg-card text-card-foreground shadow-sm p-6">
 					<h3 className="font-semibold">Quick Stats</h3>
 					<p className="text-sm text-muted-foreground">
-						{user?.name}
+						{user?.username}
 					</p>
 				</div>
 			</div>

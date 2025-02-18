@@ -4,7 +4,6 @@ import { useAuth } from './auth-context';
 import type {
 	UseRequireAuthOptions,
 	UseAutoRefreshOptions,
-	User,
 	AuthState,
 } from './types';
 import {

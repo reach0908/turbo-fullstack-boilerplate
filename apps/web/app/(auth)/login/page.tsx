@@ -15,7 +15,11 @@ export default function LoginPage() {
 				</p>
 			</div>
 			<div className="space-y-4">
-				<Button variant="default" onClick={login} className="w-full">
+				<Button
+					variant="default"
+					onClick={() => login('discord')}
+					className="w-full"
+				>
 					Continue with Discord
 				</Button>
 			</div>

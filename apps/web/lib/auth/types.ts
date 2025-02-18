@@ -52,6 +52,7 @@ export interface UseAutoRefreshOptions {
  * 인증 컨텍스트 타입
  */
 export interface AuthContextType extends Omit<AuthState, 'error'> {
+	login: (provider?: string) => void;
 	logout: () => Promise<void>;
 	refreshAuth: () => Promise<void>;
 }

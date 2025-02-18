@@ -2,14 +2,16 @@
 
 import { ThemeProvider } from 'next-themes';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { HydrationBoundary, type DehydratedState } from '@tanstack/react-query';
 import { useState } from 'react';
 import { AuthProvider } from '@/lib/auth/auth-context';
 
 interface ProvidersProps {
 	children: React.ReactNode;
+	dehydratedState: DehydratedState;
 }
 
-export function Providers({ children }: ProvidersProps) {
+export function Providers({ children, dehydratedState }: ProvidersProps) {
 	const [queryClient] = useState(
 		() =>
 			new QueryClient({
@@ -24,9 +26,17 @@ export function Providers({ children }: ProvidersProps) {
 
 	return (
 		<QueryClientProvider client={queryClient}>
-			<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-				<AuthProvider>{children}</AuthProvider>
-			</ThemeProvider>
+			<HydrationBoundary state={dehydratedState}>
+				<AuthProvider>
+					<ThemeProvider
+						attribute="class"
+						defaultTheme="system"
+						enableSystem
+					>
+						{children}
+					</ThemeProvider>
+				</AuthProvider>
+			</HydrationBoundary>
 		</QueryClientProvider>
 	);
 }

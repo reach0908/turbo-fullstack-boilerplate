@@ -16,10 +16,18 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 async function fetchUser(): Promise<User | null> {
 	try {
-		const response = await fetch('/api/auth/me', {
+		const response = await fetch('/api/users/me', {
 			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+			},
 		});
-		if (!response.ok) return null;
+
+		if (!response.ok) {
+			if (response.status === 401) return null;
+			throw new Error('Failed to fetch user');
+		}
+
 		return response.json();
 	} catch (error) {
 		console.error('Failed to fetch user:', error);
@@ -34,17 +42,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 		queryKey: ['user'],
 		queryFn: fetchUser,
 		staleTime: DEFAULT_TOKEN_CONFIG.refreshInterval,
+		retry: false,
 	});
 
 	const logoutMutation = useMutation({
 		mutationFn: async () => {
-			await fetch('/api/auth/logout', {
+			const response = await fetch('/api/auth/logout', {
 				method: 'POST',
 				credentials: 'include',
+				headers: {
+					'Content-Type': 'application/json',
+				},
 			});
+
+			if (!response.ok) {
+				throw new Error('Logout failed');
+			}
 		},
 		onSuccess: () => {
 			queryClient.setQueryData(['user'], null);
+			window.location.href = '/login';
 		},
 	});
 
@@ -53,14 +70,31 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 			const response = await fetch('/api/auth/refresh', {
 				method: 'POST',
 				credentials: 'include',
+				headers: {
+					'Content-Type': 'application/json',
+				},
 			});
-			if (!response.ok) throw new TokenRefreshError();
+
+			if (!response.ok) {
+				if (response.status === 401) {
+					window.location.href = '/login';
+				}
+				throw new TokenRefreshError();
+			}
+
 			return response.json();
 		},
 		onSuccess: (data) => {
 			queryClient.setQueryData(['user'], data.user);
 		},
+		onError: () => {
+			queryClient.setQueryData(['user'], null);
+		},
 	});
+
+	const login = useCallback((provider = 'discord') => {
+		window.location.href = `/api/auth/${provider}`;
+	}, []);
 
 	const logout = useCallback(async () => {
 		await logoutMutation.mutateAsync();
@@ -91,6 +125,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 					await refreshAuth();
 				} catch (error) {
 					console.error('Failed to refresh token:', error);
+					if (error instanceof TokenRefreshError) {
+						window.location.href = '/login';
+					}
 				}
 			}
 		};
@@ -112,10 +149,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 			user: user ?? null,
 			isAuthenticated: !!user,
 			isLoading,
+			login,
 			logout,
 			refreshAuth,
 		}),
-		[user, isLoading, logout, refreshAuth],
+		[user, isLoading, login, logout, refreshAuth],
 	);
 
 	return (
