@@ -1,39 +1,39 @@
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-import { useAuth } from './auth-context';
+import { useContext, useEffect } from 'react';
 import type {
 	UseRequireAuthOptions,
 	UseAutoRefreshOptions,
-	AuthState,
-} from './types';
+	AuthContextType,
+} from '../types/auth';
+import { AuthContext } from '../components/auth-provider';
 import {
 	TokenRefreshError,
 	UnauthorizedError,
 	formatAuthError,
-} from './errors';
+} from '../utils/errors';
 
-/**
- * 보호된 라우트에서 인증 상태를 확인하는 hook
- * @param options - 인증 확인 옵션
- * @returns 인증 상태 정보
- * @throws {UnauthorizedError} 인증되지 않은 경우
- */
-export function useRequireAuth(
-	options: UseRequireAuthOptions = {},
-): Omit<AuthState, 'error'> {
+export function useAuth(): AuthContextType {
+	const context = useContext(AuthContext);
+	if (!context) {
+		throw new Error('useAuth must be used within an AuthProvider');
+	}
+	return context;
+}
+
+export function useRequireAuth(options: UseRequireAuthOptions = {}) {
 	const { redirectTo = '/login', onRedirect } = options;
-	const { isAuthenticated, isLoading, user, error } = useAuth();
+	const { isAuthenticated, isLoading, user } = useAuth();
 	const router = useRouter();
 
 	useEffect(() => {
 		if (!isLoading && !isAuthenticated) {
-			const authError = error || new UnauthorizedError();
+			const authError = new UnauthorizedError();
 			onRedirect?.();
 			router.push(
 				`${redirectTo}?error=${encodeURIComponent(formatAuthError(authError))}`,
 			);
 		}
-	}, [isAuthenticated, isLoading, router, redirectTo, onRedirect, error]);
+	}, [isAuthenticated, isLoading, router, redirectTo, onRedirect]);
 
 	return {
 		isLoading,
@@ -42,11 +42,7 @@ export function useRequireAuth(
 	};
 }
 
-/**
- * 토큰 자동 갱신을 처리하는 hook
- * @param options - 토큰 갱신 옵션
- */
-export function useAutoRefresh(options: UseAutoRefreshOptions = {}): void {
+export function useAutoRefresh(options: UseAutoRefreshOptions = {}) {
 	const {
 		interval = 14 * 60 * 1000, // 기본값 14분
 		enabled = true,

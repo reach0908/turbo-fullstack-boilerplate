@@ -1,4 +1,4 @@
-import { LandingLayoutClient } from '@/components/landing-layout';
+import { LandingLayout } from '@/components/landing-layout';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -6,10 +6,10 @@ export const metadata: Metadata = {
 	description: 'Welcome to our platform',
 };
 
-export default function LandingLayout({
+export default function LandingPageLayout({
 	children,
 }: {
 	children: React.ReactNode;
 }) {
-	return <LandingLayoutClient>{children}</LandingLayoutClient>;
+	return <LandingLayout>{children}</LandingLayout>;
 }

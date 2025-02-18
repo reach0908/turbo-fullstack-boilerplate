@@ -1,64 +1,22 @@
 'use client';
 
-import {
-	createContext,
-	useContext,
-	useCallback,
-	useEffect,
-	useMemo,
-} from 'react';
+import { createContext, useCallback, useEffect, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import type { AuthContextType, User } from './types';
-import { DEFAULT_TOKEN_CONFIG, shouldRefreshToken } from './utils';
-import { TokenRefreshError } from './errors';
+import type { AuthContextType } from '../types/auth';
+import { userQuery } from '../queries/queries';
+import { authMutations } from '../queries/mutations';
+import { DEFAULT_TOKEN_CONFIG, shouldRefreshToken } from '../utils/token';
+import { TokenRefreshError } from '../utils/errors';
 
-const AuthContext = createContext<AuthContextType | null>(null);
-
-async function fetchUser(): Promise<User | null> {
-	try {
-		const response = await fetch('/api/users/me', {
-			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		});
-
-		if (!response.ok) {
-			if (response.status === 401) return null;
-			throw new Error('Failed to fetch user');
-		}
-
-		return response.json();
-	} catch (error) {
-		console.error('Failed to fetch user:', error);
-		return null;
-	}
-}
+export const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
 	const queryClient = useQueryClient();
 
-	const { data: user, isLoading } = useQuery({
-		queryKey: ['user'],
-		queryFn: fetchUser,
-		staleTime: DEFAULT_TOKEN_CONFIG.refreshInterval,
-		retry: false,
-	});
+	const { data: user, isLoading } = useQuery(userQuery);
 
 	const logoutMutation = useMutation({
-		mutationFn: async () => {
-			const response = await fetch('/api/auth/logout', {
-				method: 'POST',
-				credentials: 'include',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			});
-
-			if (!response.ok) {
-				throw new Error('Logout failed');
-			}
-		},
+		...authMutations.logout,
 		onSuccess: () => {
 			queryClient.setQueryData(['user'], null);
 			window.location.href = '/login';
@@ -66,24 +24,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 	});
 
 	const refreshAuthMutation = useMutation({
-		mutationFn: async () => {
-			const response = await fetch('/api/auth/refresh', {
-				method: 'POST',
-				credentials: 'include',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			});
-
-			if (!response.ok) {
-				if (response.status === 401) {
-					window.location.href = '/login';
-				}
-				throw new TokenRefreshError();
-			}
-
-			return response.json();
-		},
+		...authMutations.refresh,
 		onSuccess: (data) => {
 			queryClient.setQueryData(['user'], data.user);
 		},
@@ -159,12 +100,4 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 	return (
 		<AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 	);
-}
-
-export function useAuth() {
-	const context = useContext(AuthContext);
-	if (!context) {
-		throw new Error('useAuth must be used within an AuthProvider');
-	}
-	return context;
 }

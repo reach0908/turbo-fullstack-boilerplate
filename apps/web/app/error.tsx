@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { Button } from '@workspace/ui/components/button';
-import { isAuthError } from '@/lib/auth/errors';
+import { isAuthError, formatAuthError } from '@/lib/auth/utils/errors';
 
 export default function Error({
 	error,
@@ -17,7 +17,7 @@ export default function Error({
 	}, [error]);
 
 	const errorMessage = isAuthError(error)
-		? error.message
+		? formatAuthError(error)
 		: '예기치 않은 오류가 발생했습니다.';
 
 	return (

@@ -4,7 +4,7 @@ import { ThemeProvider } from 'next-themes';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { HydrationBoundary, type DehydratedState } from '@tanstack/react-query';
 import { useState } from 'react';
-import { AuthProvider } from '@/lib/auth/auth-context';
+import { AuthProvider } from '@/lib/auth/components/auth-provider';
 
 interface ProvidersProps {
 	children: React.ReactNode;

@@ -1,43 +1,49 @@
 'use client';
 
-import { useAuth } from '@/lib/auth/auth-context';
+import Link from 'next/link';
+import { Button } from '@workspace/ui/components/button';
+import { useAuth } from '@/lib/auth/hooks/use-auth';
 
-export function LandingLayoutClient({
-	children,
-}: {
-	children: React.ReactNode;
-}) {
-	const { user } = useAuth();
+export function LandingLayout({ children }: { children: React.ReactNode }) {
+	const { isAuthenticated, logout } = useAuth();
 
 	return (
-		<div className="min-h-screen">
-			<header className="fixed top-0 w-full bg-white/80 backdrop-blur-sm border-b z-50">
-				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-					<div className="flex justify-between h-16">
-						<div className="flex items-center">
-							<span className="text-xl font-bold">Logo</span>
-						</div>
-						<div className="flex items-center space-x-4">
-							{user ? (
-								<a
-									href="/dashboard"
-									className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+		<div className="flex min-h-screen flex-col">
+			<header className="border-b">
+				<div className="container mx-auto flex h-16 items-center justify-between px-4">
+					<Link href="/" className="font-bold">
+						Turbo Fullstack
+					</Link>
+					<nav>
+						{isAuthenticated ? (
+							<div className="flex items-center gap-4">
+								<Link href="/dashboard">
+									<Button variant="ghost">Dashboard</Button>
+								</Link>
+								<Button
+									variant="outline"
+									onClick={() => logout()}
 								>
-									go to Dashboard
-								</a>
-							) : (
-								<a
-									href="/login"
-									className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
-								>
-									Login
-								</a>
-							)}
-						</div>
-					</div>
+									Logout
+								</Button>
+							</div>
+						) : (
+							<Link href="/login">
+								<Button>Login</Button>
+							</Link>
+						)}
+					</nav>
 				</div>
 			</header>
-			<main className="pt-16">{children}</main>
+			<main className="flex-1">{children}</main>
+			<footer className="border-t">
+				<div className="container mx-auto flex h-16 items-center justify-between px-4">
+					<p className="text-sm text-gray-500">
+						© {new Date().getFullYear()} Turbo Fullstack. All
+						rights reserved.
+					</p>
+				</div>
+			</footer>
 		</div>
 	);
 }
