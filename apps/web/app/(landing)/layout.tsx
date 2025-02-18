@@ -1,4 +1,4 @@
-import { LandingLayoutClient } from '@/app/(landing)/components/landing-layout';
+import { LandingLayoutClient } from '@/components/landing-layout';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
