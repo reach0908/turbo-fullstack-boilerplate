@@ -24,6 +24,14 @@ export interface AuthState {
 }
 
 /**
+ * 토큰 관리 설정
+ */
+export interface TokenConfig {
+	refreshThreshold: number; // 토큰 갱신 임계값 (밀리초)
+	refreshInterval: number; // 토큰 갱신 체크 간격 (밀리초)
+}
+
+/**
  * useRequireAuth hook 옵션 타입
  */
 export interface UseRequireAuthOptions {
@@ -40,8 +48,10 @@ export interface UseAutoRefreshOptions {
 	onError?: (error: unknown) => void;
 }
 
-export interface AuthContextType extends AuthState {
-	login: () => Promise<void>;
+/**
+ * 인증 컨텍스트 타입
+ */
+export interface AuthContextType extends Omit<AuthState, 'error'> {
 	logout: () => Promise<void>;
 	refreshAuth: () => Promise<void>;
 }
