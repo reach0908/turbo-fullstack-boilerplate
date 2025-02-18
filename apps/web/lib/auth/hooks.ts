@@ -7,25 +7,34 @@ import type {
 	User,
 	AuthState,
 } from './types';
+import {
+	TokenRefreshError,
+	UnauthorizedError,
+	formatAuthError,
+} from './errors';
 
 /**
  * 보호된 라우트에서 인증 상태를 확인하는 hook
  * @param options - 인증 확인 옵션
  * @returns 인증 상태 정보
+ * @throws {UnauthorizedError} 인증되지 않은 경우
  */
 export function useRequireAuth(
 	options: UseRequireAuthOptions = {},
 ): Omit<AuthState, 'error'> {
 	const { redirectTo = '/login', onRedirect } = options;
-	const { isAuthenticated, isLoading, user } = useAuth();
+	const { isAuthenticated, isLoading, user, error } = useAuth();
 	const router = useRouter();
 
 	useEffect(() => {
 		if (!isLoading && !isAuthenticated) {
+			const authError = error || new UnauthorizedError();
 			onRedirect?.();
-			router.push(redirectTo);
+			router.push(
+				`${redirectTo}?error=${encodeURIComponent(formatAuthError(authError))}`,
+			);
 		}
-	}, [isAuthenticated, isLoading, router, redirectTo, onRedirect]);
+	}, [isAuthenticated, isLoading, router, redirectTo, onRedirect, error]);
 
 	return {
 		isLoading,
@@ -53,7 +62,10 @@ export function useAutoRefresh(options: UseAutoRefreshOptions = {}): void {
 			try {
 				await refreshAuth();
 			} catch (error) {
-				onError?.(error);
+				const refreshError = new TokenRefreshError(
+					error instanceof Error ? error.message : undefined,
+				);
+				onError?.(refreshError);
 			}
 		};
 
