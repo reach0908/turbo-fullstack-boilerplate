@@ -1,18 +1,32 @@
 'use client';
 
-import * as React from 'react';
-import { ThemeProvider as NextThemesProvider } from 'next-themes';
+import { ThemeProvider } from 'next-themes';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useState } from 'react';
+import { AuthProvider } from '@/lib/auth/auth-context';
 
-export function Providers({ children }: { children: React.ReactNode }) {
+interface ProvidersProps {
+	children: React.ReactNode;
+}
+
+export function Providers({ children }: ProvidersProps) {
+	const [queryClient] = useState(
+		() =>
+			new QueryClient({
+				defaultOptions: {
+					queries: {
+						staleTime: 60 * 1000, // 1분
+						refetchOnWindowFocus: false,
+					},
+				},
+			}),
+	);
+
 	return (
-		<NextThemesProvider
-			attribute="class"
-			defaultTheme="system"
-			enableSystem
-			disableTransitionOnChange
-			enableColorScheme
-		>
-			{children}
-		</NextThemesProvider>
+		<QueryClientProvider client={queryClient}>
+			<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+				<AuthProvider>{children}</AuthProvider>
+			</ThemeProvider>
+		</QueryClientProvider>
 	);
 }
